@@ -1,0 +1,270 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 26-oct-2019, 11:24:32
+    Author     : DarkS
+*/
+
+table.formatHTML5 tr.selected {
+    background-color: #e92929 !important;
+    color:#fff;
+    vertical-align: middle;
+    padding: 1.5em;
+}
+
+html,
+body,
+.container-fluid {
+    height: 100%;
+}
+
+div .black{
+    background: black;
+}
+
+.white{
+    color: white;
+}
+
+.centrado{
+    text-align: center;
+    padding-top: 15px;
+}
+
+.panel_negro{
+    background-color: black;
+    height: 600px;
+    opacity: 0.8;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.ancho_completo{
+    width: 100%;
+}
+.estrella{
+    width: 75px;
+    height: 50px;
+}
+.checkboxes{
+    margin-right: 120px;
+}
+
+.filtro{
+    width: 40px;
+}
+
+.panel_blanco{
+    background-color: white;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.panel_blanco_filtro{
+    background-color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+
+.panel_blanco_bread{
+    background-color: white;
+}
+
+.panel_negro_opaco{
+    background-color: black;
+    height: 600px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+div .lightgrey{
+    background: #D3D3D3;
+    height: 200px;
+}
+
+.blanco{
+    color: white;
+    text-align: center;
+    justify-content: center;
+}
+
+div .contenido{
+    height: 50%;
+    text-align: center;
+}
+
+.row .celda{
+    height: 150px;
+}
+
+col{
+    height: 100px;
+}
+
+div .red{
+    background: red;
+}
+
+div .grey{
+    background: #999999;
+    height: 75px;
+}
+
+.logo_pagina{
+    background-size: 100px 100px; 
+    margin: 5px; 
+    width: 100px; 
+    height: 100px; 
+}
+
+
+.logo_pagina_nav{
+    background-size: 50px 50px; 
+    margin: 5px; 
+    width: 60px; 
+    height: 60px; 
+}
+
+.logo_pagina_footer{
+    background-size: 100px 100px; 
+    margin-top: 50px; 
+    width: 100px; 
+    height: 100px; 
+}
+
+div .cabecera{
+    height: 200px;
+    background-color: #999999;
+}
+
+.imagen_background_index{
+    background: url(../img/background_logo.jpg) no-repeat; 
+    width: 600px;
+    height: 350px;
+    margin: 15px; 
+    /*    opacity: 0.5;
+        filter: alpha(opacity=50);*/
+}
+
+.icono{
+    width: 50px;
+    height: 50px;
+}
+
+.imagen{
+    width: 100px;
+    height: 100px;
+}
+.imagen_grande{
+    width: 150px;
+    height: 150px;
+}
+
+.derecha{
+    text-align: right;
+}
+
+.izquierda{
+    text-align: left;
+}
+
+.icono_grande{
+    width: 100px;
+    height: 100px;
+}
+
+.redes_sociales{
+    margin-top: 40px;
+}
+
+.boton_centrado{
+    margin-top: 25px;
+}
+
+.lista{
+    margin-top: 50px;
+    text-align: center;
+}
+
+.lista_sobre{
+    margin-top: 60px;
+    text-align: center;
+}
+
+a{
+    color: black;
+}
+
+.bg-lightgrey{
+    background-color: lightgrey;
+}
+
+div .sobre_nosotros{
+    height: 600px;
+}
+
+.jumbotron-fluid {
+    text-shadow: #444 0 1px 1px;
+    color: #FFF;
+    position: relative;
+    height: 40vh;
+}
+
+.jumbotron-fluid .container-fluid {
+    position: relative;
+    z-index: 2;
+}
+
+#map {
+    height: 450px;
+    width: 450px;
+}
+
+.background{
+    background: url(../img/background.jpg) no-repeat;
+    height: 100vh;
+}
+
+
+.background_listado{
+    background: url(../img/background.jpg) no-repeat;
+    height: 525px;
+}
+
+.background_carrousel{
+    height: 300px;
+    width: 500px;
+}
+
+.relleno{
+    height: 600px;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
+
+input[type='text']{
+    width: 200px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}
