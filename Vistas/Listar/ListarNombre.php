@@ -31,9 +31,13 @@ and open the template in the editor.
                     $(this).addClass("selected");
                     $id = $('.id', this).html();
 
+                    $('#media_pelicula').val("0");
+                    $("#puntos").val("0");
+                    $('#idpelicula').val($id);
+                    $email = $('#email_usuario').val();
 
                     $.ajax({
-                        data: {"idpelicula": $id}, //datos json recogidos del formulario formu
+                        data: {"idpelicula": $id, "email": $email}, //datos json recogidos del formulario formu
                         type: "POST", // método de envío de datos
                         url: "../auxiliar/servidor_detalle.php", //código a ejecutar en el servidor
                         success: function (respuesta) {
@@ -55,8 +59,14 @@ and open the template in the editor.
                                 $("#recaudacion").html(variable[0].recaudacion);
                                 $("#argumento").html(variable[0].argumento);
                                 $("#foto").attr('src', 'data:image/png;base64,' + variable[0].foto);
-
-
+                                if (variable[1].puntuacion != "0") {
+                                    $("#puntos").val(variable[1].puntuacion);
+                                    $('#puntos').attr('disabled', true);
+                                } else {
+                                    $("#puntos").val("0");
+                                    $('#puntos').prop("disabled", false);
+                                }
+                                $("#media_pelicula").html(variable[2].media);
                             } else {
                                 alert("Se ha producido un error de ajax");
                             }
@@ -191,16 +201,16 @@ and open the template in the editor.
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-<!--                                                                        <div class="modal-title" id="exampleModalLabel">-->
-                                                                            <div class="row ancho_completo">
-                                                                                <div class="col">
-                                                                                    <span id="titulo"></span>
-                                                                                </div>
-                                                                                <div class="col">
-                                                                                    <div id="media" style="text-align: right;"><span id="media_pelicula">0</span></div>
+                                                                        <div class="row ancho_completo">
+                                                                            <div class="col">
+                                                                               <span class="titulo_modal">Ficha:</span>  <span id="titulo" class="titulo_modal"></span>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <div id="media" class="rating_media">
+                                                                                    <span class="titulo_modal">Rating General: </span><span id="media_pelicula" class="titulo_modal">0</span>
                                                                                 </div>
                                                                             </div>
-                                                                        <!--</div>-->
+                                                                        </div>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
@@ -211,6 +221,7 @@ and open the template in the editor.
                                                                                 <?php echo '<img id="foto" class="imagen_grande" src="data:image/jpg;base64,' . $pelicula->getFoto() . '"/>'; ?><br>
                                                                             </div>
                                                                             <div class="col-8">
+                                                                                <span class="titulo_modal centrado">Argumento </span><br>
                                                                                 <span id="argumento"></span><br>
                                                                             </div>
                                                                         </div>
@@ -247,17 +258,33 @@ and open the template in the editor.
                                                                         <div class="row">
                                                                             <div class="col-6 derecha"><br>
                                                                                 <form name="frmPuntuacion" action="../../controlador.php" method="POST">
-                                                                                    <!--<img src="../../img/star.jpg" class="estrella">-->
-                                                                                    Puntuación del 1 al 5: <input type="number" name="puntos" id="puntos" min="1" max="5">
-                                                                                    <!--<input type="image" id="puntuacion" name="puntuacion" src="../../img/star.jpg" class="estrella">-->
-                                                                                    
+
+                                                                                    Puntuación del 1 al 5: <input type="number" name="puntos" id="puntos" value="0" min="0" max="5">
+
+                                                                                    <?php
+                                                                                    if (isset($usuAdmin)) {
+                                                                                        ?>
+                                                                                        <input type="text" hidden id="email_usuario" name="email_usuario" value="<?php echo $usuAdmin->getEmail() ?>">
+                                                                                        <?php
+                                                                                    } else if (isset($usuRegistrado)) {
+                                                                                        ?>
+                                                                                        <input type="text" hidden id="email_usuario" name="email_usuario" value="<?php echo $usuRegistrado->getEmail() ?>">
+                                                                                        <?php
+                                                                                    } else {
+                                                                                        ?>
+                                                                                        <input type="text" hidden id="email_usuario" name="email_usuario" value="No Registrado"><br>
+                                                                                        <?php
+                                                                                    }
+                                                                                    ?>
+
+                                                                                    <input type="text" hidden id="idpelicula" name="idpelicula" value=""><br>
                                                                                 </form>
                                                                             </div>
 
                                                                             <div class="col-6 izquierda">
                                                                                 <br>
                                                                                 <input type="submit" id="puntuar" name="puntuar" class="btn btn-secondary btn-danger" value="Puntuar">
-                                                                                
+
                                                                             </div>
                                                                         </div>
                                                                     </div>

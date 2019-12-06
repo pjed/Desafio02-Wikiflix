@@ -31,6 +31,28 @@ if (isset($_REQUEST['cerrar'])) {
     header('Location: index.php');
 }
 
+if (isset($_REQUEST['puntuar'])) {
+    $idpelicula = $_REQUEST['idpelicula'];
+    $email = $_REQUEST['email_usuario'];
+    $puntos = $_REQUEST['puntos'];
+
+
+
+    conexion::abrirBBDD();
+
+    $valoracion = conexion::comprobarValoracionPelicula($idpelicula, $email, $puntos);
+
+    if (!isset($valoracion)) {
+        conexion::insertarValoracion($idpelicula, $email, $puntos);
+
+        conexion::cerrarBBDD();
+        header('Location: ./Vistas/Registro/puntuacion_registrada.php');
+    } else {
+        conexion::cerrarBBDD();
+        header('Location: ./Vistas/Registro/puntuacion_error.php');
+    }
+}
+
 if (isset($_REQUEST['aceptar'])) {
 
     $idroles = 1;

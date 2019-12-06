@@ -15,6 +15,7 @@ include './Vistas/auxiliar/constantes.php';
 include './Vistas/auxiliar/Persona.php';
 include './Vistas/auxiliar/Pelicula.php';
 include './Vistas/auxiliar/Genero.php';
+include './Vistas/auxiliar/Valoracion.php';
 
 class conexion {
 
@@ -173,6 +174,45 @@ class conexion {
         /* Ejecución de la sentencia. */
         mysqli_stmt_execute($stmt);
     }
+    
+    public static function insertarValoracion($idpelicula, $email, $puntos){
+        $query = "INSERT INTO puntuacion (idpelicula, usuario, puntuacion) VALUES (?,?,?)"; //Estos parametros seran sustituidos mas adelante por valores.
+        $stmt = conexion::$conexion->prepare($query);
+
+        $stmt->bind_param("ssi", $idpelicula, $email, $puntos);
+
+        /* Ejecución de la sentencia. */
+        $stmt->execute();
+
+        /* Ejecución de la sentencia. */
+        mysqli_stmt_execute($stmt);
+        return true;
+    }
+    
+    public static function comprobarValoracionPelicula($idpelicula, $email, $puntos){
+        $query = "select * 
+                    from puntuacion
+                    where idpelicula = ? and usuario = ?";
+        $stmt = conexion::$conexion->prepare($query);
+        $stmt->bind_param("ss", $idpelicula, $email);
+
+        $stmt->execute();
+
+        /* Ejecución de la sentencia. */
+
+        $resultado = $stmt->get_result();
+
+        while ($fila = $resultado->fetch_assoc()) {
+            $val = null;
+            if ($fila != null) {
+                $val = new Valoracion($fila['idpelicula'], $fila['usuario'], $fila['valoracion']);
+            }
+        }
+        $stmt->close();
+
+        return $val;
+    }
+   
 
     public static function registrarPelicula($idpelicula, $nombre, $direccion, $produccion, $guion, $musica, $pais, $ano, $estreno, $duracion, $idiomas, $productora, $distribucion, $presupuesto, $recaudacion, $generos, $argumento, $nombre_foto, $foto) {
                                              
