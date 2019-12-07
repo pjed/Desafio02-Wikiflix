@@ -117,15 +117,15 @@ class conexion {
 
     public static function obtenerTodosUsuarios() {
         $usuarios = null;
-        $consulta = "select * "
-                . "from BBDD_Buscaminas.rol as r, BBDD_Buscaminas.rol_usuario as ru, BBDD_Buscaminas.usuario as u "
-                . "where r.idROL = ru.idROL_USUARIO and ru.DNI_USUARIO = u.DNI";
+        $consulta = "SELECT r.idroles, r.descripcion, ru.rol_idroles, u.usuario, u.password, u.nombre, u.apellidos, u.direccion, u.telefono "
+                . "FROM usuario as u, rol_usuario as ru, rol as r "
+                . "WHERE u.usuario=ru.usuario_usuario and ru.rol_idroles=r.idroles;";
 
         if ($stmt = conexion::$conexion->prepare($consulta)) {
             $stmt->execute();
             $resultado = $stmt->get_result();
             while ($fila = $resultado->fetch_assoc()) {
-                $p = new Persona($fila['DNI'], $fila['NOMBRE'], $fila['APELLIDOS'], $fila['USUARIO'], $fila['PASS'], $fila['N_PARTIDAS'], $fila['GANADAS'], $fila['PERDIDAS'], $fila['idROL'], $fila['DESCRIPCION']);
+                $p = new Persona($fila['idroles'], $fila['descripcion'], $fila['rol_idroles'], $fila['usuario'], $fila['password'], $fila['nombre'], $fila['apellidos'], $fila['direccion'], $fila['telefono']);
                 $usuarios[] = $p;
             }
         }

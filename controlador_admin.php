@@ -26,3 +26,13 @@ if (isset($_REQUEST['volver'])) {
     unset($_SESSION['pelis_sin_validar']);
     header('Location: ./index.php');
 }
+
+if (isset($_REQUEST['crud'])) {
+    conexion::abrirBBDD();
+    $usuarios = conexion::obtenerTodosUsuarios();
+    conexion::cerrarBBDD();
+
+    $_SESSION['usuarios_crud'] = $usuarios;
+    header('Location: ./Vistas/Administrador/crud_usuarios.php');
+}
+
