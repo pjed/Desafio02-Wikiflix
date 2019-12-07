@@ -174,8 +174,8 @@ class conexion {
         /* Ejecución de la sentencia. */
         mysqli_stmt_execute($stmt);
     }
-    
-    public static function insertarValoracion($idpelicula, $email, $puntos){
+
+    public static function insertarValoracion($idpelicula, $email, $puntos) {
         $query = "INSERT INTO puntuacion (idpelicula, usuario, puntuacion) VALUES (?,?,?)"; //Estos parametros seran sustituidos mas adelante por valores.
         $stmt = conexion::$conexion->prepare($query);
 
@@ -188,8 +188,8 @@ class conexion {
         mysqli_stmt_execute($stmt);
         return true;
     }
-    
-    public static function comprobarValoracionPelicula($idpelicula, $email, $puntos){
+
+    public static function comprobarValoracionPelicula($idpelicula, $email, $puntos) {
         $query = "select * 
                     from puntuacion
                     where idpelicula = ? and usuario = ?";
@@ -212,10 +212,9 @@ class conexion {
 
         return $val;
     }
-   
 
     public static function registrarPelicula($idpelicula, $nombre, $direccion, $produccion, $guion, $musica, $pais, $ano, $estreno, $duracion, $idiomas, $productora, $distribucion, $presupuesto, $recaudacion, $generos, $argumento, $nombre_foto, $foto) {
-                                             
+
 //        $query = "INSERT INTO pelicula (idpelicula, nombre, direccion, produccion, guion, musica, pais, ano, estreno, duracion, idiomas, productora, distribucion, presupuesto, recaudacion, generos_idgeneros, argumento, nombre_foto, foto) "
 //                . "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"; //Estos parametros seran sustituidos mas adelante por valores.
 //        $stmt = conexion::$conexion->prepare($query);
@@ -225,10 +224,10 @@ class conexion {
 //
 //        /* Ejecución de la sentencia. */
 //        $stmt->execute();
+        $activa = 0;
 
-
-        $query = "INSERT INTO pelicula (idpelicula, nombre, direccion, produccion, guion, musica, pais, ano, estreno, duracion, idiomas, productora, distribucion, presupuesto, recaudacion, argumento, nombre_foto, foto) "
-                . "VALUES ('$idpelicula','$nombre','$direccion','$produccion','$guion','$musica','$pais','$ano','$estreno','$duracion','$idiomas','$productora','$distribucion','$presupuesto','$recaudacion','$argumento','$nombre_foto','$foto')"; //Estos parametros seran sustituidos mas adelante por valores.
+        $query = "INSERT INTO pelicula (idpelicula, nombre, direccion, produccion, guion, musica, pais, ano, estreno, duracion, idiomas, productora, distribucion, presupuesto, recaudacion, argumento, nombre_foto, foto, activa) "
+                . "VALUES ('$idpelicula','$nombre','$direccion','$produccion','$guion','$musica','$pais','$ano','$estreno','$duracion','$idiomas','$productora','$distribucion','$presupuesto','$recaudacion','$argumento','$nombre_foto','$foto','$activa')"; //Estos parametros seran sustituidos mas adelante por valores.
         mysqli_query(conexion::$conexion, $query);
 
 
@@ -236,9 +235,9 @@ class conexion {
         //Que esta llena la lista de generos la recorremos y la guardamos en la 
         // variable generos
         foreach ($generos as $selected) {
-            $queryID = "SELECT idpelicula FROM pelicula WHERE nombre = '".$nombre."'";
+            $queryID = "SELECT idpelicula FROM pelicula WHERE nombre = '" . $nombre . "'";
             $queryGenero = "INSERT INTO pelicula_genero (idpelicula, generos_idgeneros) "
-                    . "VALUES ((".$queryID."),'$selected')"; //Estos parametros seran sustituidos mas adelante por valores.
+                    . "VALUES ((" . $queryID . "),'$selected')"; //Estos parametros seran sustituidos mas adelante por valores.
             mysqli_query(conexion::$conexion, $queryGenero);
         }
     }
@@ -286,12 +285,41 @@ class conexion {
         $stmt->execute();
     }
 
+    public static function recuperarPeliculasNoValidadas() {
+
+        $query = "select distinct p.idpelicula, p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion, p.activa
+                        from pelicula as p
+                        where p.activa = 0";
+
+        $stmt = conexion::$conexion->prepare($query);
+
+        $stmt->execute();
+
+        /* Ejecución de la sentencia. */
+
+        $resultado = $stmt->get_result();
+
+        $peliculas = null;
+
+        while ($fila = $resultado->fetch_assoc()) {
+            $p = null;
+            if ($fila != null) {
+                $p = new Pelicula($fila['idpelicula'], $fila['nombre'], $fila['direccion'], $fila['produccion'], $fila['guion'], $fila['musica'], $fila['pais'], $fila['ano'], $fila['estreno'], $fila['duracion'], $fila['idiomas'], $fila['productora'], $fila['distribucion'], $fila['presupuesto'], $fila['recaudacion'], $fila['generos_idgeneros'], $fila['argumento'], $fila['nombre_foto'], $fila['tipo_foto'], $fila['foto'], $fila['activa']);
+            }
+            $peliculas[] = $p;
+        }
+        $stmt->close();
+
+        return $peliculas;
+    }
+
     public static function obtenerTodasPeliculas($tipo, $filtro) {
         $peliculas = null;
 
         if ($tipo == "estreno" && $filtro == "Todos") {
-            $query = "select distinct p.idpelicula, p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion
-                        from pelicula as p";
+            $query = "select distinct p.idpelicula, p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion, p.activa
+                        from pelicula as p
+                        where p.activa = 1";
 
             $stmt = conexion::$conexion->prepare($query);
 
@@ -303,9 +331,9 @@ class conexion {
         }
 
         if ($tipo == "estreno" && $filtro != "Todos") {
-            $query = "select distinct p.idpelicula, p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion
+            $query = "select distinct p.idpelicula, p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion, p.activa
                         from pelicula as p
-                        where p.estreno = ?;";
+                        where p.activa = 1 and p.estreno = ?;";
 
             $stmt = conexion::$conexion->prepare($query);
             $stmt->bind_param("s", $filtro);
@@ -322,9 +350,9 @@ class conexion {
 
         if ($tipo == "letra" && $filtro != "Todas%") {
 
-            $query = "select distinct p.idpelicula, p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion
+            $query = "select distinct p.idpelicula, p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion, p.activa
                         from pelicula as p
-                        where p.nombre LIKE ?;";
+                        where p.activa = 1 and p.nombre LIKE ?;";
 
             $stmt = conexion::$conexion->prepare($query);
             $stmt->bind_param("s", $filtro);
@@ -337,8 +365,9 @@ class conexion {
         }
 
         if ($tipo == "letra" && $filtro == "Todas%") {
-            $query = "select distinct p.idpelicula, p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion
-                        from pelicula as p;";
+            $query = "select distinct p.idpelicula, p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion, p.activa
+                        from pelicula as p
+                        where p.activa = 1;";
 
             $stmt = conexion::$conexion->prepare($query);
             $stmt->bind_param("s", $filtro);
@@ -352,9 +381,10 @@ class conexion {
 
         if ($tipo == "genero" && $filtro != "Todos") {
 
-            $query = "select distinct p.idpelicula, p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion
+            $query = "select distinct p.idpelicula, p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion, p.activa
                         from pelicula as p, generos as g, pelicula_genero as pg
                         where p.idpelicula = pg.idpelicula and pg.generos_idgeneros = g.idgeneros and
+                        p.activa = 1 and
                         g.descripcion = ?;";
 
             $stmt = conexion::$conexion->prepare($query);
@@ -385,8 +415,9 @@ class conexion {
 //        }
 
         if ($tipo == "genero" && $filtro == "Todos") {
-            $query = "select distinct p.idpelicula, p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion
-                        from pelicula as p";
+            $query = "select distinct p.idpelicula, p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion, p.activa
+                        from pelicula as p
+                        where p.activa = 1";
 
             $stmt = conexion::$conexion->prepare($query);
 
@@ -402,7 +433,7 @@ class conexion {
         while ($fila = $resultado->fetch_assoc()) {
             $p = null;
             if ($fila != null) {
-                $p = new Pelicula($fila['idpelicula'], $fila['nombre'], $fila['direccion'], $fila['produccion'], $fila['guion'], $fila['musica'], $fila['pais'], $fila['ano'], $fila['estreno'], $fila['duracion'], $fila['idiomas'], $fila['productora'], $fila['distribucion'], $fila['presupuesto'], $fila['recaudacion'], $fila['generos_idgeneros'], $fila['argumento'], $fila['nombre_foto'], $fila['tipo_foto'], $fila['foto']);
+                $p = new Pelicula($fila['idpelicula'], $fila['nombre'], $fila['direccion'], $fila['produccion'], $fila['guion'], $fila['musica'], $fila['pais'], $fila['ano'], $fila['estreno'], $fila['duracion'], $fila['idiomas'], $fila['productora'], $fila['distribucion'], $fila['presupuesto'], $fila['recaudacion'], $fila['generos_idgeneros'], $fila['argumento'], $fila['nombre_foto'], $fila['tipo_foto'], $fila['foto'], $fila['activa']);
             }
             $peliculas[] = $p;
         }

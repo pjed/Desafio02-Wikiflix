@@ -32,8 +32,9 @@ class Pelicula {
     private $nombre_foto;
     private $tipo_foto;
     private $foto;
+    private $activa;
     
-    function __construct($id_pelicula, $nombre, $direccion, $produccion, $guion, $musica, $pais, $ano, $estreno, $duracion, $idiomas, $productora, $distribucion, $presupuesto, $recaudacion, $generos_idgeneros, $argumento, $nombre_foto, $tipo_foto, $foto) {
+    function __construct($id_pelicula, $nombre, $direccion, $produccion, $guion, $musica, $pais, $ano, $estreno, $duracion, $idiomas, $productora, $distribucion, $presupuesto, $recaudacion, $generos_idgeneros, $argumento, $nombre_foto, $tipo_foto, $foto, $activa) {
         $this->id_pelicula = $id_pelicula;
         $this->nombre = $nombre;
         $this->direccion = $direccion;
@@ -54,8 +55,18 @@ class Pelicula {
         $this->nombre_foto = $nombre_foto;
         $this->tipo_foto = $tipo_foto;
         $this->foto = $foto;
+        $this->activa = $activa;
+    }
+    
+    function getActiva() {
+        return $this->activa;
     }
 
+    function setActiva($activa) {
+        $this->activa = $activa;
+    }
+
+    
     function getNombre_foto() {
         return $this->nombre_foto;
     }

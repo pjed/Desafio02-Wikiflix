@@ -38,6 +38,15 @@
                             <!-- End Level two -->
                         </ul>
                     </li>
+                    
+                    <!-- Level one dropdown -->
+                    <li class="nav-item dropdown">
+                        <a id="dropdownMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Administración</a>
+                        <ul aria-labelledby="dropdownMenu1" class="dropdown-menu border-0 shadow">
+                            <li><a href="./Vistas/Administrador/crud_usuarios.php" class="dropdown-item">CRUD Usuarios</a></li>
+                            <!-- End Level two -->
+                        </ul>
+                    </li>
                     <!-- End Level one -->
                 </ul>
             </div>
