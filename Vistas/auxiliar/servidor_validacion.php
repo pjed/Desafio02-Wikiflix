@@ -37,6 +37,22 @@ if (isset($idpelicula)) {
 
         /* Ejecución de la sentencia. */
         $stmt->execute();
+
+        //Insertamos en la tabla noticias que se ha dado de alta una nueva pelicula
+        $query = "INSERT INTO noticia (idnoticia, titulo, usuario_usuario, fecha, descripcion, idpelicula) VALUES (?,?,?,?,?,?)"; //Estos parametros seran sustituidos mas adelante por valores.
+        $stmt = $conn->prepare($query);
+
+        $idnoticia = 0;
+        $titulo = $nombre;
+        $usuario_usuario = 'administrador@gmail.com';
+        $fecha = gmdate('Y-m-d h:i:s');
+        $descripcion = 'La nueva pelicula llamada ' . $nombre . ' con la direccion de ' . $direccion .
+                ' en la produccion de ' . $produccion . ' con el guion de ' . $guion . ' con la musica de ' . $musica . ' que la fecha de estreno es del ano ' . $estreno;
+
+        $stmt->bind_param("issssi", $idnoticia, $titulo, $usuario_usuario, $fecha, $descripcion, $idpelicula);
+
+        /* Ejecución de la sentencia. */
+        $stmt->execute();
     }
     if ($operacion == "Modificar") {
         $query = "UPDATE pelicula SET nombre=?, direccion=?, produccion=?, guion=?, musica=?, estreno=? WHERE idpelicula=?"; //Estos parametros seran sustituidos mas adelante por valores.

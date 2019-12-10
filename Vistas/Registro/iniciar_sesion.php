@@ -21,9 +21,19 @@ and open the template in the editor.
             <?php
             include '../Registro/cabecera_registro_solo_logo.php';
             ?>
+
+            <div class="panel_blanco_bread">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="../../index.php">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Iniciar Sesión</li>
+                    </ol>
+                </nav>
+            </div>
+
             <div class="panel_negro">
                 <div class="row h-100 justify-content-center align-items-center">
-                    <div class="col-4">
+                    <div class="col-xl-6 col-lg-6 col-sm-6">
                         <form name="frmLogin" action="../../controlador.php" method="POST">
                             <h3 class="white centrado">Iniciar Sesión</h3>
                             <br>
@@ -45,6 +55,9 @@ and open the template in the editor.
                                         <button type="submit" id="iniciar" name="iniciar" class="btn btn-danger">Iniciar Sesión</button>
                                     </div>	
                                     <div class="col text-center">
+                                        <a href="olvido.php"><button type="button" id="olvido" name="olvido" class="btn btn-danger">Olvidar contaseña</button></a>
+                                    </div>	
+                                    <div class="col text-center">
                                         <a href="registro.php"><button type="button" class="btn btn-danger">Registrarse</button></a>
                                     </div>
                                 </div>
@@ -53,12 +66,6 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
-            <?php
-            include '../Footers_iniciados/footer1.php';
-            ?>
-            <?php
-            include '../Footers/footer2.php';
-            ?>
         </div>
 
 
@@ -68,4 +75,10 @@ and open the template in the editor.
         <script src="../../js/popper.min.js"></script>
         <script src="../../js/bootstrap.min.js"></script>
     </body>
+    <?php
+    include '../Footers_iniciados/footer1.php';
+    ?>
+    <?php
+    include '../Footers/footer2.php';
+    ?>
 </html>

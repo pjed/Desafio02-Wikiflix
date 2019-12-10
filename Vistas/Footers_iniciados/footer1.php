@@ -30,10 +30,11 @@
             <div class="col-3">
                 <div class="row justify-content-center align-self-center">
                     <div class="redes_sociales">
-                        <a href="https://www.twitter.com"><img src="../../img/twitter.png" class="icono"></a>
-                        <a href="https://www.facebook.com"><img src="../../img/facebook.png" class="icono"></a>
-                        <a href="https://www.instagram.com"><img src="../../img/instagram.png" class="icono"></a>
-                        <input type="button" id="contactanos" name="contactanos" value="Contáctanos" class="btn btn btn-danger mx-auto d-block boton_centrado">
+                        <a href="https://www.twitter.com" target="_blank"><img src="../../img/twitter.png" class="icono"></a>
+                        <a href="https://www.facebook.com" target="_blank"><img src="../../img/facebook.png" class="icono"></a>
+                        <a href="https://www.instagram.com" target="_blank"><img src="../../img/instagram.png" class="icono"></a>
+                        
+                        <a href="../../Vistas/Contactanos/Contactanos.php"><input type="button" id="contactanos" name="contactanos" value="Contáctanos" class="btn btn btn-danger mx-auto d-block boton_centrado"></a>
                     </div>
                 </div>
             </div>

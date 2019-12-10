@@ -21,6 +21,15 @@ and open the template in the editor.
             <?php
             include '../Registro/cabecera_registro_solo_logo.php';
             ?>
+            
+            <div class="panel_blanco_bread">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="../../index.php">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Registro</li>
+                    </ol>
+                </nav>
+            </div>
             <div class="panel_negro">
                 <div class="row h-100 justify-content-center align-items-center">
                     <div class="col-4">

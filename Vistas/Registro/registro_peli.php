@@ -25,6 +25,7 @@ and open the template in the editor.
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="../../index.php">Home</a></li>
+                        <li class="breadcrumb-item" aria-current="page">Área Películas</li>
                         <li class="breadcrumb-item active" aria-current="page">Añadir Película</li>
                     </ol>
                 </nav>
@@ -150,8 +151,6 @@ and open the template in the editor.
                                                             Acción
                                                         </label>
                                                     </div>
-                                                </div>
-                                                <div class="col-2 text-center">
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="checkbox" value="2" id="genero" name="genero[]">
                                                         <label class="form-check-label" for="defaultCheck1">
@@ -166,10 +165,10 @@ and open the template in the editor.
                                             </div>
                                         </div>
                                     </div>
-                                        <div class="custom-file">
-                                            <label class="custom-file-label" name="imagefile" for="imagen">Imagen: </label>
-                                            <input type="file" required name="imagefile" class="custom-file-input">
-                                        </div>
+                                    <div class="custom-file">
+                                        <label class="custom-file-label" name="imagefile" for="imagen">Imagen: </label>
+                                        <input type="file" name="imagefile" class="custom-file-input">
+                                    </div>
 
                                     <script>
                                         // Add the following code if you want the name of the file appear on select
@@ -200,12 +199,6 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
-            <?php
-            include '../Footers_iniciados/footer1.php';
-            ?>
-            <?php
-            include '../Footers/footer2.php';
-            ?>
         </div>
 
 
@@ -215,4 +208,10 @@ and open the template in the editor.
         <script src="../../js/popper.min.js"></script>
         <script src="../../js/bootstrap.min.js"></script>
     </body>
+    <?php
+    include '../Footers_iniciados/footer1.php';
+    ?>
+    <?php
+    include '../Footers/footer2.php';
+    ?>
 </html>

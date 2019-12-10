@@ -21,6 +21,12 @@ and open the template in the editor.
             <?php
             include '../Headers/cabecera_vacia.php';
             ?>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../../index.php">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Quienes Somos</li>
+                </ol>
+            </nav>
             <div class="row">
                 <div class="container">
                     <div class="jumbotron sobre_nosotros">

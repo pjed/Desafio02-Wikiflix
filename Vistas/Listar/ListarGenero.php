@@ -4,6 +4,11 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+<?php
+include '../../Vistas/auxiliar/Genero.php';
+include '../../Vistas/auxiliar/Persona.php';
+include '../../Vistas/auxiliar/Pelicula.php';
+?>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -24,16 +29,16 @@ and open the template in the editor.
 
         <script>
             $(function () {
+
                 $("tbody tr").click(function () {
                     $('.selected').removeClass('selected');
                     $(this).addClass("selected");
                     $id = $('.id', this).html();
-                    
+
                     $('#media_pelicula').val("0");
                     $("#puntos").val("0");
                     $('#idpelicula').val($id);
                     $email = $('#email_usuario').val();
-
 
                     $.ajax({
                         data: {"idpelicula": $id, "email": $email}, //datos json recogidos del formulario formu
@@ -57,11 +62,15 @@ and open the template in the editor.
                                 $("#presupuesto").html(variable[0].presupuesto);
                                 $("#recaudacion").html(variable[0].recaudacion);
                                 $("#argumento").html(variable[0].argumento);
-                                $("#foto").attr('src', 'data:image/png;base64,' + variable[0].foto);
+                                if (variable[0].foto != null) {
+                                    $("#foto").attr('src', 'data:image/png;base64,' + variable[0].foto);
+                                } else {
+                                    $("#foto").attr('src', '../../img/sin_foto.jpg');
+                                }
                                 if (variable[1].puntuacion != "0") {
                                     $("#puntos").val(variable[1].puntuacion);
                                     $('#puntos').attr('disabled', true);
-                                }else{
+                                } else {
                                     $("#puntos").val("0");
                                     $('#puntos').prop("disabled", false);
                                 }
@@ -78,9 +87,6 @@ and open the template in the editor.
     <body class="background_listado">
         <div class="container-fluid">
             <?php
-            include '../../Vistas/auxiliar/Persona.php';
-            include '../../Vistas/auxiliar/Pelicula.php';
-            include '../../Vistas/auxiliar/Genero.php';
             session_start();
             ob_start();
 
@@ -122,12 +128,13 @@ and open the template in the editor.
             }
             ?>
             <!--Miga de pan-->
-            <div class="row container-fluid">
+            <div class="row">
                 <div class="col-12">
                     <br>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="../../index.php">Home</a></li>
+                            <li class="breadcrumb-item" aria-current="page">Listar Películas</li>
                             <li class="breadcrumb-item active" aria-current="page">Listar Género</li>
                         </ol>
                     </nav>
@@ -181,7 +188,15 @@ and open the template in the editor.
                                                             ?>
                                                             <tr>
                                                                 <td class="id" hidden><?php echo $pelicula->getId_pelicula() ?></td>
-                                                                <td><?php echo '<img class="imagen" src="data:image/jpg;base64,' . $pelicula->getFoto() . '"/>'; ?></td>
+                                                                <td>
+                                                                    <?php
+                                                                    if ($pelicula->getFoto() != null) {
+                                                                        echo '<img class="imagen" src="data:image/jpg;base64,' . $pelicula->getFoto() . '"/>';
+                                                                    } else {
+                                                                        echo '<img class="imagen" src="../../img/sin_foto.jpg"/>';
+                                                                    }
+                                                                    ?>
+                                                                </td>
                                                                 <td><?php echo $pelicula->getNombre() ?></td>
                                                                 <td><?php echo $pelicula->getDireccion() ?></td>
                                                                 <td><?php echo $pelicula->getEstreno() ?></td>
@@ -202,7 +217,7 @@ and open the template in the editor.
                                                                     <div class="modal-header">
                                                                         <div class="row ancho_completo">
                                                                             <div class="col">
-                                                                               <span class="titulo_modal">Ficha:</span>  <span id="titulo" class="titulo_modal"></span>
+                                                                                <span class="titulo_modal">Ficha:</span>  <span id="titulo" class="titulo_modal"></span>
                                                                             </div>
                                                                             <div class="col">
                                                                                 <div id="media" class="rating_media">
@@ -255,7 +270,7 @@ and open the template in the editor.
                                                                             </div>
                                                                         </div>
                                                                         <div class="row">
-                                                                            <div class="col-6 derecha"><br>
+                                                                            <div class="col-xl-6 col-md-8 col-sm-8 derecha"><br>
                                                                                 <form name="frmPuntuacion" action="../../controlador.php" method="POST">
 
                                                                                     Puntuación del 1 al 5: <input type="number" name="puntos" id="puntos" value="0" min="0" max="5">
@@ -280,7 +295,7 @@ and open the template in the editor.
                                                                                 </form>
                                                                             </div>
 
-                                                                            <div class="col-6 izquierda">
+                                                                            <div class="col-xl-6 col-md-4 col-sm-4 izquierda">
                                                                                 <br>
                                                                                 <input type="submit" id="puntuar" name="puntuar" class="btn btn-secondary btn-danger" value="Puntuar">
 
@@ -313,12 +328,6 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
-            <?php
-            include '../Footers_iniciados/footer1.php';
-            ?>
-            <?php
-            include '../Footers/footer2.php';
-            ?>
         </div>
 
 
@@ -328,4 +337,15 @@ and open the template in the editor.
         <script src="../../js/popper.min.js"></script>
         <script src="../../js/bootstrap.min.js"></script>
     </body>
+
+    <?php
+    if (!isset($_SESSION['usuario'])) {
+        include '../Footers_iniciados/footer_noregistro.php';
+    } else {
+        include '../Footers_iniciados/footer1.php';
+    }
+    ?>
+    <?php
+    include '../Footers/footer2.php';
+    ?>
 </html>

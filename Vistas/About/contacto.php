@@ -82,13 +82,19 @@ and open the template in the editor.
             <?php
             include '../Headers/cabecera_vacia.php';
             ?>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../../index.php">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Contacto</li>
+                </ol>
+            </nav>
             <div class="container">
                 <div class="jumbotron sobre_nosotros col-12">
                     <div class="row">
                         <div class="col-6">
                             <div class="container-fluid text-center">
                                 <h4>Ubicación</h4>
-                                <div id="map"></div>
+                                <div class="map" id="map"></div>
                             </div>
                         </div>
                         <div class="col-6">

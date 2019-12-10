@@ -20,17 +20,30 @@ body,
 .container-fluid {
     height: 100%;
 }
+
+.row-centrado{
+    text-align: center;
+}
+
 .tabla_valida{
     padding-left: 3px;
     padding-right: 3px;
-    
+}
+
+.nav{
+    padding-top: 110px;
+}
+
+.footer{
+    padding-top: 100px;
+    padding-bottom: 40px;
 }
 
 .validar{
     padding: 10px;
     margin-top: 5px;
     margin-bottom: 5px;
-    
+
 }
 .texto_centrado{
     text-align: center;
@@ -132,8 +145,12 @@ div .lightgrey{
     justify-content: center;
 }
 
+
+.contenido{
+    height: 100%;
+}
+
 div .contenido{
-    height: 50%;
     text-align: center;
 }
 
@@ -204,6 +221,11 @@ div .cabecera{
     height: 150px;
 }
 
+.imagen_noticias{
+    width: 300px;
+    height: 200px;
+}
+
 .derecha{
     text-align: right;
 }
@@ -269,10 +291,13 @@ div .sobre_nosotros{
     height: 100vh;
 }
 
+.gif_animado{
+    width: 400px;
+    height: 250px;
+}
 
 .background_listado{
-    background: url(../img/background.jpg) no-repeat;
-    height: 525px;
+    background: url(../img/background.jpg) repeat;
 }
 
 .background_carrousel{
@@ -286,9 +311,8 @@ div .sobre_nosotros{
     filter: alpha(opacity=50);
 }
 
-
-input[type='text']{
-    width: 200px;
+.footer{
+    height: 10%;
 }
 
 input::-webkit-outer-spin-button,
@@ -300,4 +324,70 @@ input::-webkit-inner-spin-button {
 
 input[type=number] {
     -moz-appearance:textfield; /* Firefox */
+}
+
+/*// Extra small devices (portrait phones, less than 576px)*/
+@media (max-width: 575px) { 
+
+}
+
+/*// Small devices (landscape phones, less than 768px)*/
+@media (max-width: 767px) { 
+
+}
+
+/*// Medium devices (tablets, less than 992px)*/
+@media (max-width: 991px) { 
+}
+
+/*// Large devices (desktops, less than 1200px)*/
+@media (max-width: 1199px) { 
+
+    html,
+    body,
+    .container-fluid {
+        height: 100%;
+    }
+    .gif_animado{
+        width: 600px;
+        height: 350px;
+    }
+
+    p{
+        font-size: 20pt;
+    }
+
+    div .container-fluid{
+        font-size: 18pt;
+    }
+
+    input[type="button"]
+    {
+        font-size: 15pt;
+    }
+    button[type="submit"]
+    {
+        width: 75px;
+        margin-bottom: 15px;
+    }
+
+    input[type="submit"]
+    {
+        width: 75px;
+        margin-bottom: 15px;
+    }
+    button[type="button"]
+    {
+        width: 150px;
+        margin-bottom: 15px;
+    }
+
+    input-group{
+        width: 150px;
+    }
+    
+    span{
+        font-size: 10pt;
+    }
+
 }

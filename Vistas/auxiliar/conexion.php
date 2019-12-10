@@ -14,6 +14,7 @@
 include './Vistas/auxiliar/constantes.php';
 include './Vistas/auxiliar/Persona.php';
 include './Vistas/auxiliar/Pelicula.php';
+include './Vistas/auxiliar/Noticia.php';
 include './Vistas/auxiliar/Genero.php';
 include './Vistas/auxiliar/Valoracion.php';
 
@@ -58,6 +59,33 @@ class conexion {
         $stmt->close();
 
         return $p;
+    }
+
+    public static function existeUsuarioCambioPassword($usu) {
+        $query = "select * 
+                    from usuario as u 
+                    where u.usuario=?";
+        $stmt = conexion::$conexion->prepare($query);
+        $stmt->bind_param("s", $usu);
+
+        $stmt->execute();
+
+        /* Ejecución de la sentencia. */
+
+        $resultado = $stmt->get_result();
+
+        $usuario = null;
+
+        while ($fila = $resultado->fetch_assoc()) {
+            $p = null;
+            if ($fila != null) {
+                $p = new Persona(null, null, null, $fila['usuario'], $fila['password'], $fila['nombre'], $fila['apellidos'], $fila['direccion'], $fila['telefono']);
+            }
+            $usuario[] = $p;
+        }
+        $stmt->close();
+
+        return $usuario;
     }
 
     public static function existeUsuario($usu, $pass) {
@@ -149,6 +177,24 @@ class conexion {
         return $generos;
     }
 
+    public static function obtenerTodasNoticias() {
+        $noticias = null;
+        $consulta = "select idnoticia, titulo, usuario_usuario, fecha, descripcion, foto 
+                    from noticia as n, pelicula as p 
+                    where n.idpelicula = p.idpelicula;";
+
+        if ($stmt = conexion::$conexion->prepare($consulta)) {
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            while ($fila = $resultado->fetch_assoc()) {
+                $n = new Noticia($fila['idnoticia'], $fila['titulo'], $fila['usuario_usuario'], $fila['fecha'], $fila['descripcion'], $fila['foto']);
+                $noticias[] = $n;
+            }
+        }
+
+        return $noticias;
+    }
+
     public static function cerrarBBDD() {
         conexion::$conexion->close();
         //print "Conexión cerrada" . "<br />";
@@ -189,6 +235,27 @@ class conexion {
         return true;
     }
 
+    public static function insertarUsuario($usuario, $passwordCodi, $nombre, $apellidos, $direccion, $telefono, $rol_nuevo) {
+        //Insertamos el nuevo usuario
+        $query = "INSERT INTO usuario (usuario, password, nombre, apellidos, direccion, telefono) "
+                . " VALUES (?,?,?,?,?,?)";
+        $stmt = conexion::$conexion->prepare($query);
+
+        $stmt->bind_param("ssssss", $usuario, $passwordCodi, $nombre, $apellidos, $direccion, $telefono);
+
+        /* Ejecución de la sentencia. */
+        $stmt->execute();
+
+        //insertamos el rol del usuario en este caso registrado
+        $query = "INSERT INTO rol_usuario(rol_idroles, usuario_usuario) "
+                . " VALUES (?,?)";
+        $stmt = conexion::$conexion->prepare($query);
+        $stmt->bind_param("is", $rol_nuevo, $usuario);
+
+        /* Ejecución de la sentencia. */
+        $stmt->execute();
+    }
+
     public static function comprobarValoracionPelicula($idpelicula, $email, $puntos) {
         $query = "select * 
                     from puntuacion
@@ -213,6 +280,16 @@ class conexion {
         return $val;
     }
 
+    public static function cambiarPassword($usuario, $password) {
+        $query = "UPDATE usuario SET password='" . $password . "' WHERE usuario='" . $usuario . "';"; //Estos parametros seran sustituidos mas adelante por valores.
+        $stmt = conexion::$conexion->prepare($query);
+
+//        $stmt->bind_param("ss", $password, $usuario);
+
+        /* Ejecución de la sentencia. */
+        $stmt->execute();
+    }
+
     public static function registrarPelicula($idpelicula, $nombre, $direccion, $produccion, $guion, $musica, $pais, $ano, $estreno, $duracion, $idiomas, $productora, $distribucion, $presupuesto, $recaudacion, $generos, $argumento, $nombre_foto, $foto) {
 
 //        $query = "INSERT INTO pelicula (idpelicula, nombre, direccion, produccion, guion, musica, pais, ano, estreno, duracion, idiomas, productora, distribucion, presupuesto, recaudacion, generos_idgeneros, argumento, nombre_foto, foto) "
@@ -225,9 +302,13 @@ class conexion {
 //        /* Ejecución de la sentencia. */
 //        $stmt->execute();
         $activa = 0;
-
-        $query = "INSERT INTO pelicula (idpelicula, nombre, direccion, produccion, guion, musica, pais, ano, estreno, duracion, idiomas, productora, distribucion, presupuesto, recaudacion, argumento, nombre_foto, foto, activa) "
-                . "VALUES ('$idpelicula','$nombre','$direccion','$produccion','$guion','$musica','$pais','$ano','$estreno','$duracion','$idiomas','$productora','$distribucion','$presupuesto','$recaudacion','$argumento','$nombre_foto','$foto','$activa')"; //Estos parametros seran sustituidos mas adelante por valores.
+        if ($foto != null) {
+            $query = "INSERT INTO pelicula (idpelicula, nombre, direccion, produccion, guion, musica, pais, ano, estreno, duracion, idiomas, productora, distribucion, presupuesto, recaudacion, argumento, nombre_foto, foto, activa) "
+                    . "VALUES ('$idpelicula','$nombre','$direccion','$produccion','$guion','$musica','$pais','$ano','$estreno','$duracion','$idiomas','$productora','$distribucion','$presupuesto','$recaudacion','$argumento','$nombre_foto','$foto','$activa')"; //Estos parametros seran sustituidos mas adelante por valores.
+        } else {
+            $query = "INSERT INTO pelicula (idpelicula, nombre, direccion, produccion, guion, musica, pais, ano, estreno, duracion, idiomas, productora, distribucion, presupuesto, recaudacion, argumento, nombre_foto, foto, activa) "
+                    . "VALUES ('$idpelicula','$nombre','$direccion','$produccion','$guion','$musica','$pais','$ano','$estreno','$duracion','$idiomas','$productora','$distribucion','$presupuesto','$recaudacion','$argumento',NULL,NULL,'$activa')"; //Estos parametros seran sustituidos mas adelante por valores.
+        }
         mysqli_query(conexion::$conexion, $query);
 
 
@@ -242,34 +323,49 @@ class conexion {
         }
     }
 
-    public static function modificarUsuario($dni, $nombre, $apellidos, $usuario, $password) {
-        $query = "UPDATE usuario SET NOMBRE=?, APELLIDOS=?, USUARIO=?, PASS=? WHERE DNI=?"; //Estos parametros seran sustituidos mas adelante por valores.
+    public static function modificarPerfil($email, $nombre, $apellidos, $direccion, $telefono) {
+        $query = "UPDATE usuario SET nombre=?, apellidos=?, direccion=?, telefono=? WHERE usuario=?"; //Estos parametros seran sustituidos mas adelante por valores.
         $stmt = conexion::$conexion->prepare($query);
 
-        $n_partidas = '0';
-        $ganadas = '0';
-        $perdidas = '0';
+        $stmt->bind_param("sssss", $nombre, $apellidos, $direccion, $telefono, $email);
 
-        $stmt->bind_param("sssss", $nombre, $apellidos, $usuario, $password, $dni);
+        /* Ejecución de la sentencia. */
+        $stmt->execute();
+    }
+    
+    public static function modificarUsuario($usuario, $nombre, $apellidos, $direccion, $telefono, $rol_nuevo){
+        //Modificar la tabla rol_usuario
+        $query = "UPDATE rol_usuario SET rol_idroles=? WHERE usuario_usuario=?"; //Estos parametros seran sustituidos mas adelante por valores.
+        $stmt = conexion::$conexion->prepare($query);
+        $stmt->bind_param("is", $rol_nuevo, $usuario);
+
+        /* Ejecución de la sentencia. */
+        $stmt->execute();
+        
+        
+        //Modificar la tabla usuario
+        $query = "UPDATE usuario SET nombre='".$nombre."', apellidos='".$apellidos."', direccion='".$direccion."' telefono='".$telefono."' WHERE usuario='".$usuario."'"; //Estos parametros seran sustituidos mas adelante por valores.
+        $stmt = conexion::$conexion->prepare($query);
 
         /* Ejecución de la sentencia. */
         $stmt->execute();
     }
 
-    public static function eliminarUsuario($dni) {
-        $queryRol = "DELETE FROM BBDD_Buscaminas.rol_usuario WHERE DNI_USUARIO = ?";
-        $queryUsuario = "DELETE FROM BBDD_Buscaminas.usuario WHERE DNI = ?";
+    public static function eliminarUsuario($usuario) {
+//        Borramos el rol del usuario en la tabla rol_usuario
+        $query = "DELETE FROM rol_usuario WHERE usuario_usuario=?"; //Estos parametros seran sustituidos mas adelante por valores.
+        $stmt = conexion::$conexion->prepare($query);
 
-        $stmt = conexion::$conexion->prepare($queryRol);
-
-        $stmt->bind_param("s", $dni);
+        $stmt->bind_param("s", $usuario);
 
         /* Ejecución de la sentencia. */
         $stmt->execute();
 
-        $stmt = conexion::$conexion->prepare($queryUsuario);
+        //Borramos el usuario de la tabla usuarios
+        $query = "delete from usuario where usuario=?"; //Estos parametros seran sustituidos mas adelante por valores.
+        $stmt = conexion::$conexion->prepare($query);
 
-        $stmt->bind_param("s", $dni);
+        $stmt->bind_param("s", $usuario);
 
         /* Ejecución de la sentencia. */
         $stmt->execute();
@@ -315,6 +411,20 @@ class conexion {
 
     public static function obtenerTodasPeliculas($tipo, $filtro) {
         $peliculas = null;
+
+        if ($tipo == "estreno" && $filtro == "Todos") {
+            $query = "select distinct p.idpelicula, p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion, p.activa
+                        from pelicula as p
+                        where p.activa = 1";
+
+            $stmt = conexion::$conexion->prepare($query);
+
+            $stmt->execute();
+
+            /* Ejecución de la sentencia. */
+
+            $resultado = $stmt->get_result();
+        }
 
         if ($tipo == "estreno" && $filtro == "Todos") {
             $query = "select distinct p.idpelicula, p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion, p.activa
@@ -442,44 +552,32 @@ class conexion {
         return $peliculas;
     }
 
-    //Retrieve image from database and display it on html webpage
-    public static function displayImageFromDatabase() {
-//use global keyword to declare conn inside a function
-        global $conn;
-        $sqlselectimageFromDb = "SELECT * FROM `imageuploadphpmysqlblob` ";
-        $dataFromDb = mysqli_query($conn, $sqlselectimageFromDb);
-        while ($row = mysqli_fetch_assoc($dataFromDb)) {
-            echo '<img height="250px" width="250px" src="data:image/jpg;base64,' . $row['image'] . '"/>';
-        }
+    /* Listado general para la tabla
+      select distinct p.foto, p.nombre, p.direccion, p.estreno, p.duracion
+      from pelicula as p;
+     */
 
-        /* Listado general para la tabla
-          select distinct p.foto, p.nombre, p.direccion, p.estreno, p.duracion
-          from pelicula as p;
-         */
+    /* Listado especifico por pelicula especifica
+      select p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.protagonistas, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion
+      from pelicula as p
+      where p.idpelicula=2;
+     */
 
-        /* Listado especifico por pelicula especifica
-          select p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.protagonistas, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion
-          from pelicula as p
-          where p.idpelicula=2;
-         */
+    /* Listado de la a la z
+      select distinct p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.protagonistas, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion
+      from pelicula as p
+      where p.nombre LIKE 'T%';
+     */
 
-        /* Listado de la a la z
-          select distinct p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.protagonistas, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion
-          from pelicula as p
-          where p.nombre LIKE 'T%';
-         */
+    /* Listado de las peliculas por generos
+      select distinct p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.protagonistas, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion
+      from pelicula as p
+      where p.generos_idgeneros = 2;
+     */
 
-        /* Listado de las peliculas por generos
-          select distinct p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.protagonistas, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion
-          from pelicula as p
-          where p.generos_idgeneros = 2;
-         */
-
-        /* Listado de las peliculas por generos
-          select distinct p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.protagonistas, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion
-          from pelicula as p
-          where p.estreno LIKE '%2019%';
-         */
-    }
-
+    /* Listado de las peliculas por generos
+      select distinct p.foto, p.argumento, p.nombre, p.direccion, p.produccion, p.guion, p.musica, p.protagonistas, p.pais, p.ano, p.estreno, p.duracion, p.idiomas, p.productora, p.distribucion, p.recaudacion
+      from pelicula as p
+      where p.estreno LIKE '%2019%';
+     */
 }

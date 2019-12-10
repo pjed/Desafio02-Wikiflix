@@ -55,7 +55,7 @@ include '../Registro/cabecera_registro_solo_logo.php';
                     $estreno = $('#estreno', this).val();
 
                     $.ajax({
-                        data: {"idpelicula": $id, "operacion": $operacion, "nombre": $nombre, "direccion": $direccion,  "produccion": $produccion, "guion": $guion, "musica": $musica, "estreno": $estreno}, //datos json recogidos del formulario formu
+                        data: {"idpelicula": $id, "operacion": $operacion, "nombre": $nombre, "direccion": $direccion, "produccion": $produccion, "guion": $guion, "musica": $musica, "estreno": $estreno}, //datos json recogidos del formulario formu
                         type: "POST", // método de envío de datos
                         url: "../auxiliar/servidor_validacion.php", //código a ejecutar en el servidor
                         success: function (respuesta) {
@@ -102,6 +102,7 @@ include '../Registro/cabecera_registro_solo_logo.php';
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="../../index.php">Home</a></li>
+                        <li class="breadcrumb-item" aria-current="page">Área Películas</li>
                         <li class="breadcrumb-item active" aria-current="page">Validar Película</li>
                     </ol>
                 </nav>
@@ -177,12 +178,13 @@ include '../Registro/cabecera_registro_solo_logo.php';
                     </div>
                 </div>
             </div>
-            <?php
-            include '../Footers_iniciados/footer1.php';
-            ?>
-            <?php
-            include '../Footers/footer2.php';
-            ?>
+
         </div>
     </body>
+    <?php
+    include '../Footers_iniciados/footer1.php';
+    ?>
+    <?php
+    include '../Footers/footer2.php';
+    ?>
 </html>
