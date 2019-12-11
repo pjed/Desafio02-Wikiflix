@@ -88,24 +88,22 @@ and open the template in the editor.
                     <li class="breadcrumb-item active" aria-current="page">Contacto</li>
                 </ol>
             </nav>
-            <div class="container">
-                <div class="jumbotron sobre_nosotros col-12">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="container-fluid text-center">
-                                <h4>Ubicación</h4>
-                                <div class="map" id="map"></div>
-                            </div>
+            <div class="jumbotron sobre_nosotros col-12">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="container-fluid text-center">
+                            <h4>Ubicación</h4>
+                            <div class="map" id="map"></div>
                         </div>
-                        <div class="col-6">
-                            <div class="container-fluid text-center">
-                                <h4>Datos de Interés</h4><br>
-                                <form name="frmContacto">
-                                    <label>Dirección: Paseo de San Gregorio - Edificio CIFP Virgen de Gracia</label><br>
-                                    <label>Número de Teléfono: 123456789</label><br>
-                                    <label>Preguntar por Pedro Javier Espinosa Duque</label><br>
-                                </form>
-                            </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="container-fluid text-center">
+                            <h4>Datos de Interés</h4><br>
+                            <form name="frmContacto">
+                                <label>Dirección: Paseo de San Gregorio - Edificio CIFP Virgen de Gracia</label><br>
+                                <label>Número de Teléfono: 123456789</label><br>
+                                <label>Preguntar por Pedro Javier Espinosa Duque</label><br>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -116,10 +114,11 @@ and open the template in the editor.
             <?php
             include '../Footers/footer2.php';
             ?>
-            <!-- Optional JavaScript -->
-            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-            <script src="../../js/jquery-3.4.1.min.js"></script>
-            <script src="../../js/popper.min.js"></script>
-            <script src="../../js/bootstrap.min.js"></script>
+        </div>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="../../js/jquery-3.4.1.min.js"></script>
+        <script src="../../js/popper.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
     </body>
 </html>

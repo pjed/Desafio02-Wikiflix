@@ -119,17 +119,17 @@ and open the template in the editor.
                 </div>
             </div>
 
+            <?php
+            if (!isset($_SESSION['usuario'])) {
+                include '../Footers_iniciados/footer_noregistro.php';
+            } else {
+                include '../Footers_iniciados/footer1.php';
+            }
+            ?>
+            <?php
+            include '../../Vistas/Footers/footer2.php';
+            ?>
 
         </div>
     </body>
-    <?php
-    if (!isset($_SESSION['usuario'])) {
-        include '../Footers_iniciados/footer_noregistro.php';
-    } else {
-        include '../Footers_iniciados/footer1.php';
-    }
-    ?>
-    <?php
-    include '../../Vistas/Footers/footer2.php';
-    ?>
 </html>

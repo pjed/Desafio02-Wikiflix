@@ -179,12 +179,12 @@ include '../Registro/cabecera_registro_solo_logo.php';
                 </div>
             </div>
 
+            <?php
+            include '../Footers_iniciados/footer1.php';
+            ?>
+            <?php
+            include '../Footers/footer2.php';
+            ?>
         </div>
     </body>
-    <?php
-    include '../Footers_iniciados/footer1.php';
-    ?>
-    <?php
-    include '../Footers/footer2.php';
-    ?>
 </html>

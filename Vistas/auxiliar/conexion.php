@@ -344,7 +344,7 @@ class conexion {
         
         
         //Modificar la tabla usuario
-        $query = "UPDATE usuario SET nombre='".$nombre."', apellidos='".$apellidos."', direccion='".$direccion."' telefono='".$telefono."' WHERE usuario='".$usuario."'"; //Estos parametros seran sustituidos mas adelante por valores.
+        $query = "UPDATE usuario SET nombre='".$nombre."', apellidos='".$apellidos."', direccion='".$direccion."', telefono='".$telefono."' WHERE usuario='".$usuario."'"; //Estos parametros seran sustituidos mas adelante por valores.
         $stmt = conexion::$conexion->prepare($query);
 
         /* Ejecución de la sentencia. */

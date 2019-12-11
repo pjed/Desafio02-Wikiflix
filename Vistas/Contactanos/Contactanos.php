@@ -115,7 +115,7 @@ session_start();
                                         </tr>
                                         <tr>
                                             <td colspan="2" style="text-align:center">
-                                                <input type="submit" value="Enviar"> 
+                                                <input type="submit" value="Enviar" class="btn btn-danger"> 
                                             </td>
                                         </tr>
                                     </table>
@@ -127,6 +127,12 @@ session_start();
                     </div>
                 </div>
             </div>
+            <?php
+            include '../Footers_iniciados/footer1.php';
+            ?>
+            <?php
+            include '../Footers/footer2.php';
+            ?>
         </div>
 
 
@@ -136,10 +142,4 @@ session_start();
         <script src="../../js/popper.min.js"></script>
         <script src="../../js/bootstrap.min.js"></script>
     </body>
-            <?php
-            include '../Footers_iniciados/footer1.php';
-            ?>
-            <?php
-            include '../Footers/footer2.php';
-            ?>
 </html>

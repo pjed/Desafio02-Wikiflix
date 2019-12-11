@@ -309,7 +309,7 @@ and open the template in the editor.
                                                     }
                                                 } else {
                                                     ?>    
-                                                    <h1>No hay ninguna pelicula con los criterios seleccionados</h1>
+                                                    <h3 class="texto_centrado">No hay ninguna pelicula con los criterios seleccionados</h3>
                                                     <?php
                                                 }
                                                 ?>
@@ -323,6 +323,18 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
+
+
+            <?php
+            if (!isset($_SESSION['usuario'])) {
+                include '../Footers_iniciados/footer_noregistro.php';
+            } else {
+                include '../Footers_iniciados/footer1.php';
+            }
+            ?>
+            <?php
+            include '../Footers/footer2.php';
+            ?>
         </div>
 
 
@@ -332,15 +344,4 @@ and open the template in the editor.
         <script src="../../js/popper.min.js"></script>
         <script src="../../js/bootstrap.min.js"></script>
     </body>
-
-    <?php
-    if (!isset($_SESSION['usuario'])) {
-        include '../Footers_iniciados/footer_noregistro.php';
-    } else {
-        include '../Footers_iniciados/footer1.php';
-    }
-    ?>
-    <?php
-    include '../Footers/footer2.php';
-    ?>
 </html>

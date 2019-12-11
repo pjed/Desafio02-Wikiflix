@@ -319,7 +319,7 @@ and open the template in the editor.
                                                     }
                                                 } else {
                                                     ?>    
-                                                    <h1>No hay ninguna pelicula con los criterios seleccionados</h1>
+                                                        <h1 class="texto_centrado">No hay ninguna pelicula con los criterios seleccionados</h1>
                                                     <?php
                                                 }
                                                 ?>
@@ -333,17 +333,16 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
+            <?php
+            if (!isset($_SESSION['usuario'])) {
+                include '../Footers_iniciados/footer_noregistro.php';
+            } else {
+                include '../Footers_iniciados/footer1.php';
+            }
+            ?>
+            <?php
+            include '../Footers/footer2.php';
+            ?>
         </div>
     </body>
-
-    <?php
-    if (!isset($_SESSION['usuario'])) {
-        include '../Footers_iniciados/footer_noregistro.php';
-    } else {
-        include '../Footers_iniciados/footer1.php';
-    }
-    ?>
-    <?php
-    include '../Footers/footer2.php';
-    ?>
 </html>

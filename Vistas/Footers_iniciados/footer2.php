@@ -7,13 +7,13 @@
 ?>
 
 <div class="row">  
-    <footer class="footer col-12 black">
+    <div class="col-12 black">
         <div class="col-12 black">  
             <div class="row justify-content-center align-self-center">
                 <p class="blanco">©2019 - Copyright - Pedro Javier Espinosa Duque <br>Wikiflix todos los derechos reservados</p>  
             </div>
         </div>      
-    </footer> 
+    </div> 
 
 </div>  
 

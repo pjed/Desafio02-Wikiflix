@@ -36,6 +36,12 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
+            <?php
+            include '../Footers_iniciados/footer1.php';
+            ?>
+            <?php
+            include '../Footers/footer2.php';
+            ?>
         </div>
 
 
@@ -45,10 +51,4 @@ and open the template in the editor.
         <script src="../../js/popper.min.js"></script>
         <script src="../../js/bootstrap.min.js"></script>
     </body>
-    <?php
-    include '../Footers_iniciados/footer1.php';
-    ?>
-    <?php
-    include '../Footers/footer2.php';
-    ?>
 </html>

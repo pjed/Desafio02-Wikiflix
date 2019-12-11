@@ -21,7 +21,7 @@ and open the template in the editor.
             <?php
             include '../Registro/cabecera_registro_solo_logo.php';
             ?>
-            
+
             <div class="panel_blanco_bread">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
@@ -48,7 +48,7 @@ and open the template in the editor.
                                 </div>
                                 <input type="password" class="form-control" id="password" name="password" required placeholder="Contraseña" aria-label="Contraseña" aria-describedby="basic-addon1" required>
                             </div>
-                            
+
                             <div class="container-fluid"> 
                                 <div class="row align-items-center">
                                     <div class="col text-center">
@@ -63,6 +63,12 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
+            <?php
+            include '../Footers_iniciados/footer1.php';
+            ?>
+            <?php
+            include '../Footers/footer2.php';
+            ?>
         </div>
 
 
@@ -72,10 +78,4 @@ and open the template in the editor.
         <script src="../../js/popper.min.js"></script>
         <script src="../../js/bootstrap.min.js"></script>
     </body>
-    <?php
-    include '../Footers_iniciados/footer1.php';
-    ?>
-    <?php
-    include '../Footers/footer2.php';
-    ?>
 </html>

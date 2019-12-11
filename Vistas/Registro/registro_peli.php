@@ -141,8 +141,8 @@ and open the template in the editor.
                                         <div class="row align-items-center">
                                             <div class="row">
                                                 <div class="col-2 checkboxes text-center">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" checked type="checkbox" value="1" id="genero" name="genero[]">
+                                                    <div class="form-check" >
+                                                        <input class="form-check-input" required checked type="checkbox" value="1" id="genero" name="genero[]">
                                                         <label class="form-check-label" for="defaultCheck1">
                                                             Gangsters
                                                         </label>
@@ -199,6 +199,12 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
+            <?php
+            include '../Footers_iniciados/footer1.php';
+            ?>
+            <?php
+            include '../Footers/footer2.php';
+            ?>
         </div>
 
 
@@ -208,10 +214,4 @@ and open the template in the editor.
         <script src="../../js/popper.min.js"></script>
         <script src="../../js/bootstrap.min.js"></script>
     </body>
-    <?php
-    include '../Footers_iniciados/footer1.php';
-    ?>
-    <?php
-    include '../Footers/footer2.php';
-    ?>
 </html>

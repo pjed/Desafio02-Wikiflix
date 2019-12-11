@@ -67,7 +67,7 @@ include '../Registro/cabecera_registro_solo_logo.php';
                     <form name="frmCRUD" action="../../controlador_admin.php" method="POST">
                         <div class="row centrado">
                             <div class="col-12">
-                                <input type="submit" class="btn btn-danger" name="crud" id="crud" value="Ver Usuarios">    
+                                <input type="submit" class="btn btn-danger" name="crud" id="crud" value="Ver">    
                             </div>
                         </div>
                         <div class="col-12">
@@ -98,7 +98,7 @@ include '../Registro/cabecera_registro_solo_logo.php';
                                         foreach ($usuarios as $usuario) {
                                             ?>
 
-                                        <form>
+                                        <form name="frmUsuario" action="../../controlador_admin.php" method="POST">
                                             <tr>
                                                 <td></td>
                                                 <td><button type="submit" id="modificar_crud" name="modificar_crud" class="btn btn-danger validar"><span class="glyphicon glyphicon-pencil validar"></span></button></td>
@@ -156,7 +156,7 @@ include '../Registro/cabecera_registro_solo_logo.php';
                             <div class="container-fluid"> 
                                 <div class="row align-items-center">
                                     <div class="col text-center">
-                                        <a href="../../index.php"><button type="button" class="btn btn-danger">Volver al index</button></a>
+                                        <a href="../../index.php"><button type="button" class="btn btn-danger">Volver</button></a>
                                     </div>
                                 </div>
                             </div>
@@ -171,16 +171,17 @@ include '../Registro/cabecera_registro_solo_logo.php';
             <script src="../../js/jquery-3.4.1.min.js"></script>
             <script src="../../js/popper.min.js"></script>
             <script src="../../js/bootstrap.min.js"></script>
+
+            <?php
+            if (!isset($_SESSION['usuario'])) {
+                include '../Footers_iniciados/footer_noregistro.php';
+            } else {
+                include '../Footers_iniciados/footer1.php';
+            }
+            ?>
+            <?php
+            include '../Footers/footer2.php';
+            ?>
         </div>
     </body>
-    <?php
-    if (!isset($_SESSION['usuario'])) {
-        include '../Footers_iniciados/footer_noregistro.php';
-    } else {
-        include '../Footers_iniciados/footer1.php';
-    }
-    ?>
-    <?php
-    include '../Footers/footer2.php';
-    ?>
 </html>

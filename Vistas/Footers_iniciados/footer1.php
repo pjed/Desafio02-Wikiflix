@@ -16,7 +16,7 @@
                 <div class="lista">
                     <a href="../../Vistas/Perfil/perfil.php">Mi cuenta</a><br>
                     <a href="../../index.php">Home</a><br>
-                    <a href="../../Vistas/Registro/iniciar_sesion.php">Registrarse</a><br>
+                    <a href="../../Vistas/Registro/registro.php">Registrarse</a><br>
                     <a href="../../Vistas/Registro/iniciar_sesion.php">Login</a><br>
                 </div>
             </div>

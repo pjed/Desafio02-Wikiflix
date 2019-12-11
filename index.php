@@ -6,6 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
+        <link href="http://allfont.es/allfont.css?fonts=open-sans" rel="stylesheet" type="text/css" />
         <meta charset="UTF-8">
 
         <!-- Bootstrap CSS -->
@@ -21,68 +22,68 @@ and open the template in the editor.
         <script src="js/popper.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script>
-//            if (sessionStorage.getItem("sonando") == null) {
-//                window.open("audio.php", "_blank");
-//                sessionStorage.setItem("sonando", true);
-//            }
+            if (sessionStorage.getItem("sonando") == null) {
+                window.open("audio.php", "_blank");
+                sessionStorage.setItem("sonando", true);
+            }
         </script>
     </head>
     <body>
 
-        <?php
-        include './Vistas/auxiliar/Persona.php';
-        session_start();
-        ob_start();
-
-        unset($_SESSION['peliculas']);
-        unset($_SESSION['noticias']);
-        unset($_SESSION['usuarios_crud']);
-        ?>
-
-        <?php
-        if (isset($_SESSION['usuario'])) {
-            $usuarios = $_SESSION['usuario'];
-
-            $usuRegistrado = null;
-            $usuAdmin = null;
-            $index = 1;
-            foreach ($usuarios as $fila) {
-                if ($index == 2) {
-                    $usuAdmin = $fila;
-                } else {
-                    $usuRegistrado = $fila;
-                }
-                $index++;
-            }
-
-
-            if (count($usuarios) == 2) {
-                include './Vistas/Headers/cabecera_login.php';
-                include './Vistas/MenuDesplegable/menu_desplegable_adm.php';
-                // MOSTRAR MENU REGISTRADOS Y ADMINISTRADORES
-                echo '<title>Bienvenido ' . $usuAdmin->getNombre() . ' como rol ' . $usuAdmin->getDescripcion() . '</title>';
-            } else {
-                include './Vistas/Headers/cabecera_login.php';
-                include './Vistas/MenuDesplegable/menu_desplegable_registrados.php';
-                //MOSTRAR MENU REGISTRADOS
-                echo '<title>Bienvenido ' . $usuRegistrado->getNombre() . ' como rol ' . $usuRegistrado->getDescripcion() . '</title>';
-            }
-        } else {
-            //MOSTRAR MENU - NO REGISTRADOS
-            include './Vistas/Headers/header.php';
-            include './Vistas/Headers/cabecera.php';
-            include './Vistas/MenuDesplegable/menu_desplegable_no_registro.php';
-        }
-        ?>
-        <!--Miga de pan que marca el home-->
-        <nav aria-label="breadcrumb" hidden>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page">Home</li>
-            </ol>
-        </nav>
-
         <div class="container-fluid">
-            <div class="row h-100 justify-content-center align-items-center">
+            <?php
+            include './Vistas/auxiliar/Persona.php';
+            session_start();
+            ob_start();
+
+            unset($_SESSION['peliculas']);
+            unset($_SESSION['noticias']);
+            unset($_SESSION['usuarios_crud']);
+            ?>
+
+            <?php
+            if (isset($_SESSION['usuario'])) {
+                $usuarios = $_SESSION['usuario'];
+
+                $usuRegistrado = null;
+                $usuAdmin = null;
+                $index = 1;
+                foreach ($usuarios as $fila) {
+                    if ($index == 2) {
+                        $usuAdmin = $fila;
+                    } else {
+                        $usuRegistrado = $fila;
+                    }
+                    $index++;
+                }
+
+
+                if (count($usuarios) == 2) {
+                    include './Vistas/Headers/cabecera_login.php';
+                    include './Vistas/MenuDesplegable/menu_desplegable_adm.php';
+                    // MOSTRAR MENU REGISTRADOS Y ADMINISTRADORES
+                    echo '<title>Bienvenido ' . $usuAdmin->getNombre() . ' como rol ' . $usuAdmin->getDescripcion() . '</title>';
+                } else {
+                    include './Vistas/Headers/cabecera_login.php';
+                    include './Vistas/MenuDesplegable/menu_desplegable_registrados.php';
+                    //MOSTRAR MENU REGISTRADOS
+                    echo '<title>Bienvenido ' . $usuRegistrado->getNombre() . ' como rol ' . $usuRegistrado->getDescripcion() . '</title>';
+                }
+            } else {
+                //MOSTRAR MENU - NO REGISTRADOS
+                include './Vistas/Headers/header.php';
+                include './Vistas/Headers/cabecera.php';
+                include './Vistas/MenuDesplegable/menu_desplegable_no_registro.php';
+            }
+            ?>
+            <!--Miga de pan que marca el home-->
+            <nav aria-label="breadcrumb" hidden>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">Home</li>
+                </ol>
+            </nav>
+
+            <div class="row justify-content-center align-items-center">
                 <div class="col-xl-12 col-md-10 col-sm-8 contenido">
                     <div id="demo" class="carousel slide" data-ride="carousel">
                         <br>
@@ -155,17 +156,17 @@ and open the template in the editor.
                     <br><br>© Wikiflix 2019</p>
                 </div>
             </div>
+            <?php
+            if (!isset($_SESSION['usuario'])) {
+                include 'Vistas/Footers/footer_noregistro.php';
+            } else {
+                include 'Vistas/Footers/footer1.php';
+            }
+            ?>
+            <?php
+            include 'Vistas/Footers/footer2.php';
+            ?>
         </div>
     </body>
 
-    <?php
-    if (!isset($_SESSION['usuario'])) {
-        include 'Vistas/Footers/footer_noregistro.php';
-    } else {
-        include 'Vistas/Footers/footer1.php';
-    }
-    ?>
-    <?php
-    include 'Vistas/Footers/footer2.php';
-    ?>
 </html>
